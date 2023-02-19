@@ -27,6 +27,9 @@ class Author(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
 
+    def __str__(self):
+        return f'{self.name.title()}'
+
 
 news = 'NEWS'
 article = 'ARTC'
@@ -38,12 +41,13 @@ class Post(models.Model):
     postAuthor = models.ForeignKey(Author, on_delete=models.CASCADE)
     postType = models.CharField(max_length=4, choices=post_types, default=news)
     postDatetime = models.DateTimeField(auto_now_add=True)
-    category = models.ManyToManyField(Category, through='PostCategory')
+    category = models.ManyToManyField(Category, through='PostCategory', related_name='posts',)
+    #category = models.ManyToManyField(Category, through='PostCategory',) # related_name='posts',)
     head = models.CharField(max_length=124)
     postText = models.TextField()
     postRate = models.SmallIntegerField(default=0)
 
-    objects = models.Manager()
+    #objects = models.Manager()
 
     def like(self):
         self.postRate += 1
@@ -55,6 +59,9 @@ class Post(models.Model):
 
     def preview(self):
         return f'{self.postText[:125]}...'
+
+    def __str__(self):
+        return f'{self.head.title()[:18]}: {self.postText[:20]}'
 
 
 class PostCategory(models.Model):
@@ -68,7 +75,7 @@ class Comment(models.Model):
     commentTxt = models.TextField()
     commentDatetime = models.DateTimeField(auto_now_add=True)
     commentRate = models.IntegerField(default=0)
-    objects = models.Manager()
+    #objects = models.Manager()
 
     def like(self):
         self.commentRate += 1
