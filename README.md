@@ -4,8 +4,7 @@
  
  templates, templatetags с полбзовательским фильтром.
  
- 
- Помимо этого применены встроенные фильтры Django.
+ помимо этого применены встроенные фильтры Django.
  ===============================================================
  This is the NewsPaper project.
  Models extended with new app, Views, templates, templatetags and custom template filter(beside inbuilt Django filters).
